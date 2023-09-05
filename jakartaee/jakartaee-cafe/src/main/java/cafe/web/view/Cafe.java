@@ -95,11 +95,15 @@ public class Cafe implements Serializable {
   }
 
   public void addCoffee() {
+    if (this.client == null){
+      this.client = ClientBuilder.newClient();
+    }
     Coffee coffee = new Coffee(this.name, this.price);
     this.client.target(baseUri).request(MediaType.APPLICATION_JSON).post(Entity.json(coffee));
     this.name = null;
     this.price = null;
     this.getAllCoffees();
+
   }
 
   public void removeCoffee(String coffeeId) {

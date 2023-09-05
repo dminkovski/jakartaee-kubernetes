@@ -1,7 +1,11 @@
 package org.coffeehouse.model;
-public class Cafe {
+public class Coffee {
     private long id;
-    private String name;
-    private Double price;
+    public String name;
+    public Double price;
 
+    @Override
+    public String toString(){
+        return String.format("%s : %.2f €",name,price);
+    }
 }
