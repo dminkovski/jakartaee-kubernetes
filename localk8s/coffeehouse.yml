@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: quarkus-coffeehouse
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: quarkus-coffeehouse
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: quarkus-coffeehouse
-          image: cafeacrjakartaa.azurecr.io/quarkus-coffeehouse
+          image: localhost:5000/coffeehouse:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -34,8 +34,6 @@ spec:
             periodSeconds: 60
             timeoutSeconds: 10
             failureThreshold: 3
-      imagePullSecrets:
-        - name: myregistrykey
 ---
 apiVersion: v1
 kind: Service
@@ -46,6 +44,6 @@ spec:
   selector:
     app: quarkus-coffeehouse
   ports:
-    - port: 80
+    - port: 8080
       name: http
       targetPort: 8080

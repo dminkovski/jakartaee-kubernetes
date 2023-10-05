@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: jakartaee-cafe
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: jakartaee-cafe
@@ -17,12 +17,12 @@ spec:
         - name: jakartaee-cafe
           env:
             - name: POSTGRES_SERVER
-              value: "db-coffee-demo.postgres.database.azure.com"
+              value: "cafe-database"
             - name: POSTGRES_USER
-              value: "jakarta@db-coffee-demo"
+              value: "postgres"
             - name: POSTGRES_PASSWORD
-              value: "ILoveCafe123!"
-          image: acrcoffeedemo.azurecr.io/jakartaee-cafe:v1
+              value: "password"
+          image: localhost:5000/jakartaee-cafe
           ports:
             - containerPort: 9080
           readinessProbe:
@@ -41,8 +41,6 @@ spec:
             periodSeconds: 60
             timeoutSeconds: 10
             failureThreshold: 3
-      imagePullSecrets:
-        - name: myregistrykey
 ---
 apiVersion: v1
 kind: Service
@@ -52,38 +50,20 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: 80
+      port: 9080
       targetPort: 9080
-    - name: https
-      port: 443
-      targetPort: 9443
   selector:
     app: jakartaee-cafe
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: jakartaee-cafe
-  annotations:
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+  name: jakartaee-cafe-lb
 spec:
-  ingressClassName: nginx
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: jakartaee-cafe
-                port:
-                  number: 80
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: jakartaee-cafe
-                port:
-                  number: 443
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 9080
+      targetPort: 9080
+  selector:
+    app: jakartaee-cafe
