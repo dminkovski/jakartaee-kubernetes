@@ -5,8 +5,9 @@
 		<feature>javaee-8.0</feature>
 		<feature>sessionDatabase-1.0</feature>
         <feature>adminCenter-1.0</feature>		
-		<feature>mpHealth-3.1</feature>
-    	<feature>mpMetrics-3.0</feature>	
+		 <feature>mpHealth-2.2</feature> <!-- Enable MicroProfile Health -->
+        <feature>mpOpenAPI-1.1</feature> <!-- Enable MicroProfile OpenAPI -->
+        <feature>mpMetrics-2.2</feature> <!-- Enable MicroProfile Metrics -->
 	</featureManager>
 
 	<!-- This template enables security. To get the full use of all the capabilities, 
@@ -33,6 +34,16 @@
 	</administrator-role>	
 
 	<mpMetrics authentication="false"/>	
+
+	<mpHealth>
+        <mpHealthEnabled>true</mpHealthEnabled>
+    </mpHealth>
+
+    <!-- Enable MicroProfile OpenAPI -->
+    <mpOpenAPI>
+        <mpOpenAPI-1.1Enabled>true</mpOpenAPI-1.1Enabled>
+    </mpOpenAPI>
+
 
 	<keyStore id="defaultKeyStore" password="password" />
 
