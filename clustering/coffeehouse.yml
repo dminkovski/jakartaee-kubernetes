@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-coffeehouse
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quarkus-coffeehouse
+  template:
+    metadata:
+      name: quarkus-coffeehouse
+      labels:
+        app: quarkus-coffeehouse
+    spec:
+      containers:
+        - name: quarkus-coffeehouse
+          image: cafeacrjakartaa.azurecr.io/quarkus-coffeehouse
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: myregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quarkus-coffeehouse-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: quarkus-coffeehouse
+  ports:
+    - port: 80
+      name: http
+      targetPort: 8080

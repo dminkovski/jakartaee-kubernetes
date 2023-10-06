@@ -5,8 +5,6 @@
 		<feature>javaee-8.0</feature>
 		<feature>sessionDatabase-1.0</feature>
         <feature>adminCenter-1.0</feature>		
-		<feature>mpHealth-3.1</feature>
-    	<feature>mpMetrics-3.0</feature>	
 	</featureManager>
 
 	<!-- This template enables security. To get the full use of all the capabilities, 
@@ -31,8 +29,6 @@
 	<administrator-role>
 		<user>admin</user>
 	</administrator-role>	
-
-	<mpMetrics authentication="false"/>	
 
 	<keyStore id="defaultKeyStore" password="password" />
 
@@ -66,7 +62,4 @@
 		<fileset dir="${shared.resource.dir}" id="PostgreSQLFileset"
 			includes="postgresql-42.6.0.jar" />
 	</library>	
-
-	<applicationMonitor updateTrigger="mbean" />	
-
 </server>

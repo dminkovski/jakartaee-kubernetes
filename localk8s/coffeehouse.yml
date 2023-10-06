@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: quarkus-coffeehouse
-          image: localhost:5000/coffeehouse:v1
+          image: localhost:5000/coffeehouse
           ports:
             - containerPort: 8080
           readinessProbe:

@@ -45,19 +45,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jakartaee-cafe
-spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 9080
-      targetPort: 9080
-  selector:
-    app: jakartaee-cafe
----
-apiVersion: v1
-kind: Service
-metadata:
   name: jakartaee-cafe-lb
 spec:
   type: LoadBalancer

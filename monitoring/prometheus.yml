@@ -13,4 +13,14 @@ scrape_configs:
     selectors:
     - role: "pod"
       label: "app=jakartaee-cafe"
+- job_name: 'quarkus-coffeehouse'
+  metrics_path: /q/metrics/
+  kubernetes_sd_configs:
+    - role: pod
+      namespaces:
+        names:
+          - default
+      selectors:
+        - role: "pod"
+          label: "app=quarkus-coffeehouse"
   scheme: http
