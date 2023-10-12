@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: quarkus-coffeehouse
-          image: cafeacrjakartaa.azurecr.io/quarkus-coffeehouse
+          image: registrycafeacr.azurecr.io/coffeehouse
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -40,9 +40,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: quarkus-coffeehouse-lb
+  name: quarkus-coffeehouse
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: quarkus-coffeehouse
   ports:

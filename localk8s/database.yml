@@ -21,6 +21,12 @@ spec:
           image: postgres:latest
           ports:
             - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-volume
+      volumes:
+        - name: db-volume
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
